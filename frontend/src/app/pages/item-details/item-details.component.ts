@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { Observable, BehaviorSubject, switchMap } from "rxjs";
 import { WarehouseItem } from "../../core/models/warehouseItem";
-import { ItemsMockService } from "../items-list/items.mock.service";
+import { ItemsService } from "../../services/items.service";
 import { ActivatedRoute } from "@angular/router";
 
 @Component({
@@ -16,11 +16,11 @@ import { ActivatedRoute } from "@angular/router";
 export class ItemDetailsComponent implements OnInit {
   private idSubject = new BehaviorSubject<string | null>(null);
   item$: Observable<WarehouseItem | undefined> = this.idSubject.pipe(
-    switchMap((id) => this.itemsMockService.getItem(`${id}`))
+    switchMap((id) => this.itemsService.getItem(Number(id)))
   );
 
   constructor(
-    private itemsMockService: ItemsMockService,
+    private itemsService: ItemsService,
     private route: ActivatedRoute
   ) {}
 

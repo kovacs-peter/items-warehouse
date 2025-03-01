@@ -1,9 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ListItemComponent } from "./list-item/list-item.component";
-import { Observable } from "rxjs";
-import { WarehouseItem } from "../../core/models/warehouseItem";
-import { ItemsMockService } from "./items.mock.service";
+import { ItemsStore } from "../../store/items.store";
 
 @Component({
   selector: "app-items-list",
@@ -12,10 +10,15 @@ import { ItemsMockService } from "./items.mock.service";
   templateUrl: "./items-list.component.html",
   styleUrls: ["./items-list.component.scss"],
 })
-export class ItemsListComponent {
-  items$: Observable<WarehouseItem[]> = this.itemsMockService.items;
+export class ItemsListComponent implements OnInit {
+  items$ = this.itemsStore.items$;
 
-  constructor(private itemsMockService: ItemsMockService) {}
+  constructor(private itemsStore: ItemsStore) {}
+
+  ngOnInit(): void {
+    this.itemsStore.loadItems();
+  }
+  //constructor(private itemsMockService: ItemsMockService) {}
 
   /* addItemToShipment(id: number): void {
     this.itemsMockService.addToShipment(id);
