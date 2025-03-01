@@ -3,6 +3,7 @@ import { ComponentStore } from "@ngrx/component-store";
 import { ItemsService } from "../services/items.service";
 import { WarehouseItem } from "../core/models/warehouseItem";
 import { tap } from "rxjs/operators";
+import { switchMap } from "rxjs";
 
 interface ItemsState {
   items: WarehouseItem[];
@@ -21,21 +22,17 @@ export class ItemsStore extends ComponentStore<ItemsState> {
   readonly loadItems = this.effect<void>((trigger$) => {
     console.log("loadItems");
     return trigger$.pipe(
-      tap(() => {
-        this.itemsService.getItems().subscribe((items) => {
-          this.patchState({ items });
-        });
+      switchMap(() => this.itemsService.getItems()),
+      tap((items) => {
+        this.patchState({ items });
       })
     );
   });
 
-  readonly loadItem = this.effect<number>((id$) =>
+  readonly loadItem = this.effect<string>((id$) =>
     id$.pipe(
-      tap((id) => {
-        this.itemsService.getItem(id).subscribe((item) => {
-          this.patchState({ selectedItem: item });
-        });
-      })
+      switchMap((id) => this.itemsService.getItem(id)),
+      tap((selectedItem) => this.patchState({ selectedItem }))
     )
   );
 }

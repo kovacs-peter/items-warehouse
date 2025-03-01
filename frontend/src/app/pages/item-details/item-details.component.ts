@@ -1,10 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
-import { Observable, BehaviorSubject, switchMap } from "rxjs";
-import { WarehouseItem } from "../../core/models/warehouseItem";
-import { ItemsService } from "../../services/items.service";
+import { Observable, map, filter } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
+import { ItemsStore } from "../../store/items.store";
 
 @Component({
   selector: "app-item-details",
@@ -14,20 +13,19 @@ import { ActivatedRoute } from "@angular/router";
   styleUrls: ["./item-details.component.scss"],
 })
 export class ItemDetailsComponent implements OnInit {
-  private idSubject = new BehaviorSubject<string | null>(null);
-  item$: Observable<WarehouseItem | undefined> = this.idSubject.pipe(
-    switchMap((id) => this.itemsService.getItem(Number(id)))
-  );
-
   constructor(
-    private itemsService: ItemsService,
+    private itemsStore: ItemsStore,
     private route: ActivatedRoute
   ) {}
+  private idObservable = new Observable<string>();
+  item$ = this.itemsStore.selectedItem$;
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      this.idSubject.next(params.get("id"));
-    });
+    this.idObservable = this.route.paramMap.pipe(
+      map((p) => p.get("id")),
+      filter((id): id is string => id !== null)
+    );
+    if (this.idObservable) this.itemsStore.loadItem(this.idObservable);
   }
 
   onSubmit(): void {

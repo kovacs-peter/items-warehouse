@@ -11,14 +11,12 @@ import { ItemsStore } from "../../store/items.store";
   styleUrls: ["./items-list.component.scss"],
 })
 export class ItemsListComponent implements OnInit {
-  items$ = this.itemsStore.items$;
-
   constructor(private itemsStore: ItemsStore) {}
+  items$ = this.itemsStore.items$;
 
   ngOnInit(): void {
     this.itemsStore.loadItems();
   }
-  //constructor(private itemsMockService: ItemsMockService) {}
 
   /* addItemToShipment(id: number): void {
     this.itemsMockService.addToShipment(id);

@@ -16,7 +16,7 @@ export class ItemsService {
     return this.http.get<WarehouseItem[]>(this.baseUrl);
   }
 
-  getItem(id: number): Observable<WarehouseItem> {
+  getItem(id: string): Observable<WarehouseItem> {
     return this.http.get<WarehouseItem>(`${this.baseUrl}/${id}`);
   }
 }
