@@ -23,6 +23,13 @@ export class ItemsMockService {
     return of(this.#mockedItems);
   }
 
+  getItem(id: string): Observable<WarehouseItem | undefined> {
+    console.log({ id });
+    const item = this.#mockedItems.find((item) => `${item.id}` === id);
+    console.log(item);
+    return of(item);
+  }
+
   // addToShipment(id: number): void {
   // const item = this.#mockedItems.find(item => item.id === id)
   // add to shipment logic
