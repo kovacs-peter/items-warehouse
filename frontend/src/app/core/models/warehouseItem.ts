@@ -1,5 +1,5 @@
 export interface WarehouseItem {
-  imageUrl: string;
+  imageUrl?: string;
   id: string;
   name: string;
   description: string;

@@ -1,23 +1,22 @@
 import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { Observable, map, filter, take } from "rxjs";
+import { Observable, map, filter, take, switchMap } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 import { ItemsStore } from "../../store/items.store";
 import { ItemFormComponent } from "../../core/components/item-form/item-form.component";
-import { UpdateWarehouseItem, WarehouseItemAttrs } from "../../core/models/warehouseItem";
+import { WarehouseItemAttrs } from "../../core/models/warehouseItem";
+import { ItemsService } from "../../services/items.service";
+import { tap } from "rxjs/operators";
 
 @Component({
-  selector: "app-item-details",
+  selector: "app-item-create",
   standalone: true,
   imports: [CommonModule, ItemFormComponent],
-  templateUrl: "./item-details.component.html",
-  styleUrls: ["./item-details.component.scss"],
+  templateUrl: "./item-create.component.html",
+  styleUrls: ["./item-create.component.scss"],
 })
-export class ItemDetailsComponent implements OnInit {
-  constructor(
-    private itemsStore: ItemsStore,
-    private route: ActivatedRoute
-  ) {}
+export class ItemCreateComponent {
+  constructor(private itemsStore: ItemsStore) {}
 
   private idObservable = new Observable<string>();
 
@@ -27,13 +26,14 @@ export class ItemDetailsComponent implements OnInit {
     this.idObservable
       .pipe(
         take(1),
-        map((id): UpdateWarehouseItem => {
+        map((id) => {
           return {
             id,
             ...event,
           };
         }),
-        map((itemToUpdate) => this.itemsStore.updateItem(itemToUpdate))
+        switchMap((itemToUpdate) => this.itemService.updateItem(itemToUpdate)),
+        tap((response) => console.log("Item updated successfully", response))
       )
       .subscribe({
         error: (error) => console.error("Error updating item", error),
