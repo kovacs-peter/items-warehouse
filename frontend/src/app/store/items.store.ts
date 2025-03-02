@@ -19,15 +19,14 @@ export class ItemsStore extends ComponentStore<ItemsState> {
   readonly items$ = this.select((state) => state.items);
   readonly selectedItem$ = this.select((state) => state.selectedItem);
 
-  readonly loadItems = this.effect<void>((trigger$) => {
-    console.log("loadItems");
-    return trigger$.pipe(
+  readonly loadItems = this.effect<void>((trigger$) =>
+    trigger$.pipe(
       switchMap(() => this.itemsService.getItems()),
       tap((items) => {
         this.patchState({ items });
       })
-    );
-  });
+    )
+  );
 
   readonly loadItem = this.effect<string>((id$) =>
     id$.pipe(
