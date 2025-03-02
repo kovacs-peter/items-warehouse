@@ -1,0 +1,30 @@
+:host {
+  width: 100vw;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.navigation-container {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+  ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    li {
+      list-style: none;
+      a {
+        text-decoration: none;
+        color: #000;
+        font-size: 1rem;
+        font-weight: 500;
+        &:hover {
+          color: #007bff;
+        }
+      }
+    }
+  }
+  width: 100%;
+  padding: 0.5rem;
+}

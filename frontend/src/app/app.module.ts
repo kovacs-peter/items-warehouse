@@ -5,10 +5,11 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { ItemsStore } from "./store/items.store";
 import { HttpClientModule } from "@angular/common/http";
+import { ItemFormComponent } from "./core/components/navigation/navigation.component";
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, ItemFormComponent],
   providers: [ItemsStore],
   bootstrap: [AppComponent],
 })

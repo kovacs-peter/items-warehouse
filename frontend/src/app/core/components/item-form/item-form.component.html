@@ -25,6 +25,13 @@
         required
       />
     </div>
-    <button type="submit" [disabled]="!itemForm.form.valid">{{ submitText }}</button>
+    <div class="button-container">
+      <button class="delete" *ngIf="shouldDelete" type="button" (click)="onDeleteClick()">
+        Delete
+      </button>
+      <button class="submit" type="submit" [disabled]="!itemForm.form.valid">
+        {{ submitText }}
+      </button>
+    </div>
   </form>
 </div>

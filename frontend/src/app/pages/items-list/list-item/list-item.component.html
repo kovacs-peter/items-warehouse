@@ -3,11 +3,9 @@
     <img [src]="item.imageUrl" alt="warehouse-item-image" />
   </div>
   <div class="list-item--content">
-    <span>
-      <a [routerLink]="['/items', item.id]">
-        <b>{{ item.name }}</b>
-      </a>
-    </span>
+    <a [routerLink]="['/items', item.id]">
+      <b>{{ item.name }}</b>
+    </a>
     <span>{{ item.description }}</span>
   </div>
   <span>{{ item.quantity }}x</span>

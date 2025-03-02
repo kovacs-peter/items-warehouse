@@ -20,7 +20,11 @@ router.post('/', function(req, res) {
 });
 
 router.get('/', function(req, res) {
-  res.json(items);
+  const resItems =  items.map((item)=> ({
+    ...item,
+    imageUrl: "https://placehold.co/150x150"
+  }))
+  res.json(resItems)
 });
 
 router.get('/:id', function(req, res) {
