@@ -12,6 +12,7 @@ import { WarehouseItemAttrs } from "../../models/warehouseItem";
 })
 export class ItemFormComponent implements OnInit {
   @Input() item: WarehouseItemAttrs | null = null;
+  @Input() submitText: string = "Save";
   @Output() onSubmit = new EventEmitter<WarehouseItemAttrs>();
   formItem: WarehouseItemAttrs = {
     name: "",

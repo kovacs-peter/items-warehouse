@@ -1,7 +1,11 @@
 import { Injectable } from "@angular/core";
 import { ComponentStore } from "@ngrx/component-store";
 import { ItemsService } from "../services/items.service";
-import { UpdateWarehouseItem, WarehouseItem } from "../core/models/warehouseItem";
+import {
+  CreateWarehouseItem,
+  UpdateWarehouseItem,
+  WarehouseItem,
+} from "../core/models/warehouseItem";
 import { tap } from "rxjs/operators";
 import { Observable, switchMap } from "rxjs";
 
@@ -33,6 +37,20 @@ export class ItemsStore extends ComponentStore<ItemsState> {
       switchMap((id) => this.itemsService.getItem(id)),
       tap((selectedItem) => this.patchState({ selectedItem }))
     )
+  );
+
+  readonly createItem = this.effect<CreateWarehouseItem>(
+    (payload: Observable<CreateWarehouseItem>) => {
+      return payload.pipe(
+        switchMap((item) => this.itemsService.createItem(item)),
+        tap((createdItem) =>
+          this.patchState((state) => ({
+            items: [...state.items, createdItem],
+          }))
+        ),
+        tap((response) => console.log("Item created successfully", response))
+      );
+    }
   );
 
   readonly updateItem = this.effect<UpdateWarehouseItem>(

@@ -1,7 +1,11 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { UpdateWarehouseItem, WarehouseItem } from "../core/models/warehouseItem";
+import {
+  CreateWarehouseItem,
+  UpdateWarehouseItem,
+  WarehouseItem,
+} from "../core/models/warehouseItem";
 
 @Injectable({
   providedIn: "root",
@@ -21,5 +25,9 @@ export class ItemsService {
 
   updateItem(item: UpdateWarehouseItem): Observable<UpdateWarehouseItem> {
     return this.http.put<UpdateWarehouseItem>(`${this.baseUrl}/items/${item.id}`, item);
+  }
+
+  createItem(item: CreateWarehouseItem): Observable<WarehouseItem> {
+    return this.http.post<WarehouseItem>(`${this.baseUrl}/items`, item);
   }
 }
