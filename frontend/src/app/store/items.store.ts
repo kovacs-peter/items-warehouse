@@ -8,6 +8,7 @@ import {
 } from "../core/models/warehouseItem";
 import { tap } from "rxjs/operators";
 import { Observable, switchMap } from "rxjs";
+import { Router } from "@angular/router";
 
 interface ItemsState {
   items: WarehouseItem[];
@@ -16,7 +17,10 @@ interface ItemsState {
 
 @Injectable()
 export class ItemsStore extends ComponentStore<ItemsState> {
-  constructor(private itemsService: ItemsService) {
+  constructor(
+    private itemsService: ItemsService,
+    private router: Router
+  ) {
     super({ items: [] });
   }
 
@@ -77,4 +81,17 @@ export class ItemsStore extends ComponentStore<ItemsState> {
       );
     }
   );
+
+  readonly removeItem = this.effect<string>((id$) => {
+    return id$.pipe(
+      switchMap((id) => this.itemsService.deleteItem(id)),
+      tap((deletedItem) =>
+        this.patchState((state) => ({
+          items: state.items.filter((item) => item.id !== deletedItem.id),
+        }))
+      ),
+      tap(() => this.router.navigate(["/"])),
+      tap((response) => console.log("Item deleted successfully", response))
+    );
+  });
 }

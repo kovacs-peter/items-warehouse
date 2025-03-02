@@ -30,4 +30,8 @@ export class ItemsService {
   createItem(item: CreateWarehouseItem): Observable<WarehouseItem> {
     return this.http.post<WarehouseItem>(`${this.baseUrl}/items`, item);
   }
+
+  deleteItem(id: string): Observable<WarehouseItem> {
+    return this.http.delete<WarehouseItem>(`${this.baseUrl}/items/${id}`);
+  }
 }

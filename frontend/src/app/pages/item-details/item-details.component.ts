@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { Observable, map, filter, take } from "rxjs";
+import { Observable, map, filter, take, of } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
 import { ItemsStore } from "../../store/items.store";
 import { ItemFormComponent } from "../../core/components/item-form/item-form.component";
@@ -39,6 +39,10 @@ export class ItemDetailsComponent implements OnInit {
         error: (error) => console.error("Error updating item", error),
         complete: () => console.log("Update complete"),
       });
+  }
+
+  onDelete(id: string) {
+    this.itemsStore.removeItem(of(id));
   }
 
   ngOnInit(): void {
