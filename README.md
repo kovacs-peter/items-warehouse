@@ -1,6 +1,18 @@
 # Interview Homework
 
+## Description
 A warehouse application that allows users to manage products, and create shipments from the items.
+
+## Technologies
+### Backend
+The app is built as an `experessJS` app (as it was already scaffolded). 
+The database for the assigment is a simple sqlite database, to keep things simple.
+
+### Frontend
+The frontend is an `Angular` application with simple custom styling. 
+It uses `ngrx` for state management.
+
+Code style is managed with ESlint with Prettier config.
 
 ## Getting Started
 ### Pre-requisites
