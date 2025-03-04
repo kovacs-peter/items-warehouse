@@ -1,8 +1,8 @@
-import express from "express";
-import path from "path";
-import cookieParser from "cookie-parser";
-import logger from "morgan";
-import cors from "cors";
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const cors = require("cors");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
@@ -10,7 +10,6 @@ const itemsRouter = require("./routes/items");
 
 const app = express();
 
-// Configure CORS
 const allowedOrigins = ["http://localhost:4200"];
 app.use(
   cors({
