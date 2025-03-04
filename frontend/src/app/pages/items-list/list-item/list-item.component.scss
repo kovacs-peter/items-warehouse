@@ -1,11 +1,22 @@
 :host {
   .list-item {
+    margin-bottom: 1.5rem;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+    background: #fefefe;
+    -webkit-box-shadow:
+      12px 12px 24px #d8d8d8,
+      -12px -12px 24px #fff;
+    box-shadow:
+      12px 12px 24px #d8d8d8,
+      -12px -12px 24px #fff;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: 10px 20px;
     &--image img {
+      border-radius: 5px;
       width: 50px;
       height: 50px;
     }
@@ -15,6 +26,16 @@
       flex-direction: column;
       justify-content: space-around;
       padding: 0 10px;
+      a {
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 500;
+        color: #000;
+        &:hover {
+          cursor: pointer;
+          color: #007bff;
+        }
+      }
     }
     &--button {
       cursor: pointer;

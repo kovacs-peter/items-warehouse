@@ -7,7 +7,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "ng test --watch",
     "lint": "eslint .",
     "prettier": "prettier --write '**/*.+(js|cjs|json|ts|tsx|md|html|scss)'",
     "prepare": "husky"

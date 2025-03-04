@@ -52,6 +52,7 @@ export class ItemsStore extends ComponentStore<ItemsState> {
             items: [...state.items, createdItem],
           }))
         ),
+        tap(() => this.router.navigate(["/"])),
         tap((response) => console.log("Item created successfully", response))
       );
     }
@@ -82,8 +83,8 @@ export class ItemsStore extends ComponentStore<ItemsState> {
     }
   );
 
-  readonly removeItem = this.effect<string>((id$) => {
-    return id$.pipe(
+  readonly removeItem = this.effect<string>((id) => {
+    return id.pipe(
       switchMap((id) => this.itemsService.deleteItem(id)),
       tap((deletedItem) =>
         this.patchState((state) => ({

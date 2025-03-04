@@ -13,7 +13,10 @@ import { WarehouseItemAttrs } from "../../models/warehouseItem";
 export class ItemFormComponent implements OnInit {
   @Input() item: WarehouseItemAttrs | null = null;
   @Input() submitText: string = "Save";
+  @Input() shouldDelete?: boolean;
+  @Output() handleDelete = new EventEmitter();
   @Output() onSubmit = new EventEmitter<WarehouseItemAttrs>();
+
   formItem: WarehouseItemAttrs = {
     name: "",
     description: "",
@@ -22,6 +25,9 @@ export class ItemFormComponent implements OnInit {
   };
   onSubmitForm(): void {
     this.onSubmit.emit(this.formItem);
+  }
+  onDeleteClick() {
+    if (this.shouldDelete && this.handleDelete) this.handleDelete.emit();
   }
   ngOnInit(): void {
     if (this.item) {

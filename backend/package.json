@@ -2,14 +2,33 @@
   "name": "warehouse-api",
   "version": "0.0.0",
   "private": true,
+  "type": "commonjs",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node bin/www",
+    "lint": "eslint .",
+    "prettier": "prettier --write .",
+    "test": "jest",
+    "init:db": "node ./bin/initDb"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.21.2",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.21.0",
+    "eslint": "^9.21.0",
+    "eslint-config-prettier": "^10.0.2",
+    "eslint-plugin-node": "^11.1.0",
+    "globals": "^16.0.0",
+    "jest": "^29.7.0",
+    "prettier": "^3.5.2",
+    "supertest": "^7.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }

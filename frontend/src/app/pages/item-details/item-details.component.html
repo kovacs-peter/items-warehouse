@@ -1,4 +1,13 @@
 <div *ngIf="item$ | async as item" class="item-details">
-  <app-item-form [item]="item" (onSubmit)="onUpdate($event)" submitText="Update"></app-item-form>
-  <button (click)="onDelete(item.id)">Delete</button>
+  <h2>
+    Edit:
+    {{ item.name }}
+  </h2>
+  <app-item-form
+    [item]="item"
+    (onSubmit)="onUpdate($event)"
+    (handleDelete)="onDelete($event)"
+    [shouldDelete]="!!onDelete"
+    submitText="Update"
+  ></app-item-form>
 </div>
