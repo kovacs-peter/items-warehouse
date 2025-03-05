@@ -1,0 +1,14 @@
+<div class="shipment-cart">
+  <header>
+    <h2>Pending Shipments</h2>
+  </header>
+  <section>
+    <ul>
+      <li *ngFor="let item of shipmentItems$ | async">
+        {{ item.name }} - Quantity: {{ item.quantity }}
+      </li>
+    </ul>
+    <button (click)="onShipmentClear()">Clear Cart</button>
+    <button>Ship Items</button>
+  </section>
+</div>

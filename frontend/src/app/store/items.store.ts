@@ -7,7 +7,7 @@ import {
   WarehouseItem,
 } from "../core/models/warehouseItem";
 import { tap } from "rxjs/operators";
-import { Observable, switchMap } from "rxjs";
+import { map, Observable, switchMap } from "rxjs";
 import { Router } from "@angular/router";
 
 interface ItemsState {
@@ -42,6 +42,16 @@ export class ItemsStore extends ComponentStore<ItemsState> {
       tap((selectedItem) => this.patchState({ selectedItem }))
     )
   );
+
+  readonly getItem = (id: string) => {
+    return this.items$.pipe(
+      map((items) =>
+        items.find((item) => {
+          return item.id === id;
+        })
+      )
+    );
+  };
 
   readonly createItem = this.effect<CreateWarehouseItem>(
     (payload: Observable<CreateWarehouseItem>) => {

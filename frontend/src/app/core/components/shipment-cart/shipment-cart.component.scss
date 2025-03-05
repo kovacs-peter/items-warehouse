@@ -1,0 +1,8 @@
+@import "../../../../styles/mixins";
+
+.shipment-cart {
+  @include item-details-style;
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+}
