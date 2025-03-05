@@ -15,4 +15,7 @@ export class ShipmentCartComponent {
   onShipmentClear(): void {
     this.shipmentsStore.clearCart();
   }
+  onShipmentCreate(): void {
+    this.shipmentsStore.createShipment();
+  }
 }

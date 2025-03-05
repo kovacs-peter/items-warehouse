@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
 import { ComponentStore } from "@ngrx/component-store";
 
-import { filter, map } from "rxjs";
-import { ShipmentItem } from "../core/models/shipment";
+import { filter, map, switchMap } from "rxjs";
+import { ShipmentItem, ShipmentPayload } from "../core/models/shipment";
 import { ItemsStore } from "./items.store";
+import { ShipmentsService } from "../services/shipments.service";
 
 interface ShipmentsState {
   shipmentCartItems: Record<ShipmentItem["id"], ShipmentItem>;
@@ -11,7 +12,10 @@ interface ShipmentsState {
 
 @Injectable()
 export class ShipmentsStore extends ComponentStore<ShipmentsState> {
-  constructor(private itemsStore: ItemsStore) {
+  constructor(
+    private itemsStore: ItemsStore,
+    private shipmentsService: ShipmentsService
+  ) {
     super({ shipmentCartItems: {} });
   }
 
@@ -30,7 +34,7 @@ export class ShipmentsStore extends ComponentStore<ShipmentsState> {
               ...state,
               shipmentCartItems: {
                 ...state.shipmentCartItems,
-                [id]: { id, name, quantity: Math.max(shipmentQuantity + 1, quantity) },
+                [id]: { id, name, quantity: Math.min(shipmentQuantity + 1, quantity) },
               },
             };
           });
@@ -42,4 +46,20 @@ export class ShipmentsStore extends ComponentStore<ShipmentsState> {
   readonly clearCart = () => {
     this.patchState({ shipmentCartItems: {} });
   };
+
+  readonly createShipment = this.effect((trigger$) =>
+    trigger$.pipe(
+      switchMap(() => {
+        const shipmentItems: ShipmentPayload = Object.values(this.get().shipmentCartItems).map(
+          ({ id, quantity }) => ({ itemId: id, quantity })
+        );
+        return this.shipmentsService.createShipment(shipmentItems).pipe(
+          map(() => {
+            this.clearCart();
+            this.itemsStore.loadItems();
+          })
+        );
+      })
+    )
+  );
 }

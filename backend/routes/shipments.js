@@ -119,10 +119,10 @@ router.post("/", (req, res) => {
 
   processShipment()
     .then(() => {
-      res.status(200).send("Shipment created successfully.");
+      res.status(201).json({ message: "Shipment created successfully." });
     })
     .catch((err) => {
-      res.status(400).send(err.message);
+      res.status(400).json({ error: err.message });
     });
 });
 

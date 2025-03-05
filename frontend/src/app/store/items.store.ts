@@ -88,7 +88,8 @@ export class ItemsStore extends ComponentStore<ItemsState> {
             return state;
           })
         ),
-        tap((response) => console.log("Item updated successfully", response))
+        tap((response) => console.log("Item updated successfully", response)),
+        tap(() => this.router.navigate(["/"]))
       );
     }
   );

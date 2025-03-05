@@ -5,3 +5,8 @@ export interface ShipmentItem {
   name: string;
   quantity: number;
 }
+
+export type ShipmentPayload = {
+  itemId: WarehouseItem["id"];
+  quantity: number;
+}[];

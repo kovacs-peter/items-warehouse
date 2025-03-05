@@ -43,10 +43,7 @@ export class ItemDetailsComponent implements OnInit {
         ),
         map((itemToUpdate) => this.itemsStore.updateItem(itemToUpdate))
       )
-      .subscribe({
-        error: (error) => console.error("Error updating item", error),
-        complete: () => console.log("Update complete"),
-      });
+      .subscribe();
   }
 
   onDelete(_: void) {
