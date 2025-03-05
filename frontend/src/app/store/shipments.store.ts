@@ -21,27 +21,25 @@ export class ShipmentsStore extends ComponentStore<ShipmentsState> {
 
   readonly shipmentCartItems$ = this.select((state) => Object.values(state.shipmentCartItems));
 
-  readonly addToCart = (id: string) => {
-    const item$ = this.itemsStore.getItem(id);
-    return item$
-      .pipe(
-        filter((item) => !!item),
-        map((item) => {
-          const { id, name, quantity } = item!;
-          return this.patchState((state) => {
-            const shipmentQuantity = state.shipmentCartItems[id]?.quantity || 0;
-            return {
-              ...state,
-              shipmentCartItems: {
-                ...state.shipmentCartItems,
-                [id]: { id, name, quantity: Math.min(shipmentQuantity + 1, quantity) },
-              },
-            };
-          });
-        })
-      )
-      .subscribe();
-  };
+  readonly addToCart = this.effect<string>((id$) => {
+    return id$.pipe(
+      switchMap((id) => this.itemsStore.getItem(id)),
+      filter((item) => !!item),
+      map((item) => {
+        const { id, name, quantity } = item!;
+        return this.patchState((state) => {
+          const shipmentQuantity = state.shipmentCartItems[id]?.quantity || 0;
+          return {
+            ...state,
+            shipmentCartItems: {
+              ...state.shipmentCartItems,
+              [id]: { id, name, quantity: Math.min(shipmentQuantity + 1, quantity) },
+            },
+          };
+        });
+      })
+    );
+  });
 
   readonly clearCart = () => {
     this.patchState({ shipmentCartItems: {} });
