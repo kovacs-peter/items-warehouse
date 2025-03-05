@@ -1,3 +1,5 @@
+@import "../../../styles/mixins";
+
 .container {
   display: grid;
   grid-template-columns: 1fr 2fr;
@@ -31,15 +33,5 @@ button:disabled {
 }
 
 .item-details {
-  margin-top: 1rem;
-  padding: 2rem;
-  -webkit-border-radius: 50px;
-  border-radius: 50px;
-  background: #fefefe;
-  -webkit-box-shadow:
-    12px 12px 24px #d8d8d8,
-    -12px -12px 24px #fff;
-  box-shadow:
-    12px 12px 24px #d8d8d8,
-    -12px -12px 24px #fff;
+  @include item-details-style;
 }

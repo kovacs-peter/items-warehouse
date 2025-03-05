@@ -1,5 +1,51 @@
 # Interview Homework
 
+## Description
+A warehouse application that allows users to manage products, and create shipments from the items.
+
+## Technologies
+### Backend
+The app is built as an `experessJS` app (as it was already scaffolded). 
+The database for the assigment is a simple sqlite database, to keep things simple.
+
+### Frontend
+The frontend is an `Angular` application with simple custom styling. 
+It uses `ngrx` for state management.
+
+Code style is managed with ESlint with Prettier config.
+
+## Getting Started
+### Pre-requisites
+- the project uses `nvm` for [node version management](https://github.com/nvm-sh/nvm)
+
+### Installation
+1. run 
+    ```bash 
+      nvm use
+    ```
+    to use the correct node version
+2. run `npm install` to install dependencies in both `frontend` and `backend` folders
+    ```bash
+      cd frontend
+      npm install
+    ```
+    ```bash
+      cd ../backend
+      npm install
+    ```
+3. in the `backend` folder, run
+    ```bash
+      npm run init:db
+    ```
+    to initialize the database
+4. run `npm start` in `backend` and `fronend` folders
+
+### Running tests
+- run `npm test` in `backend` folder to run backend tests
+- run `npm test` in `frontend` folder to run frontend tests
+
+
+---
 Congratulations on making it through our awesome Talent Acquisition Team! You seem like a great candidate to join our team. Before the next round of interviews, we’d like to see some of your coding skills in action.
 
 ## Backend

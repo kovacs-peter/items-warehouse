@@ -3,6 +3,8 @@ import { CommonModule } from "@angular/common";
 import { ListItemComponent } from "./list-item/list-item.component";
 import { ItemsStore } from "../../store/items.store";
 
+import { ShipmentsStore } from "../../store/shipments.store";
+
 @Component({
   selector: "app-items-list",
   standalone: true,
@@ -11,14 +13,17 @@ import { ItemsStore } from "../../store/items.store";
   styleUrls: ["./items-list.component.scss"],
 })
 export class ItemsListComponent implements OnInit {
-  constructor(private itemsStore: ItemsStore) {}
+  constructor(
+    private itemsStore: ItemsStore,
+    private shipmentStore: ShipmentsStore
+  ) {}
   items$ = this.itemsStore.items$;
 
   ngOnInit(): void {
     this.itemsStore.loadItems();
   }
 
-  /* addItemToShipment(id: number): void {
-    this.itemsMockService.addToShipment(id);
-  }*/
+  addItemToShipment(itemId: string): void {
+    this.shipmentStore.addToCart(itemId);
+  }
 }

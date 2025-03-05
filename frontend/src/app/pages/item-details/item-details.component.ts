@@ -19,20 +19,21 @@ export class ItemDetailsComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
-  private idObservable: Observable<string>;
+  private id$: Observable<string>;
 
   item$ = this.itemsStore.selectedItem$;
 
   ngOnInit(): void {
-    this.idObservable = this.route.paramMap.pipe(
+    this.id$ = this.route.paramMap.pipe(
+      take(1),
       map((p) => p.get("id")),
       filter((id): id is string => id !== null)
     );
-    if (this.idObservable) this.itemsStore.loadItem(this.idObservable);
+    this.itemsStore.loadItem(this.id$);
   }
 
   onUpdate(event: WarehouseItemAttrs) {
-    this.idObservable
+    this.id$
       .pipe(
         take(1),
         map(
@@ -43,23 +44,17 @@ export class ItemDetailsComponent implements OnInit {
         ),
         map((itemToUpdate) => this.itemsStore.updateItem(itemToUpdate))
       )
-      .subscribe({
-        error: (error) => console.error("Error updating item", error),
-        complete: () => console.log("Update complete"),
-      });
+      .subscribe();
   }
 
   onDelete(_: void) {
-    this.idObservable
+    this.id$
       .pipe(
         take(1),
         map((id) => {
           return this.itemsStore.removeItem(id);
         })
       )
-      .subscribe({
-        error: (error) => console.error("Error deleting item", error),
-        complete: () => console.log("Delete complete"),
-      });
+      .subscribe();
   }
 }

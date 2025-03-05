@@ -1,21 +1,14 @@
 const db = require("../database/db");
+const TABLES = require("../database/tables");
 
-const createItemsTable = `
-  CREATE TABLE IF NOT EXISTS items (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT,
-    description TEXT,
-    quantity INTEGER,
-    unitPrice REAL
-  )
-`;
-
-db.run(createItemsTable, (err) => {
-  if (err) {
-    console.error("Error creating items table:", err.message);
-  } else {
-    console.log("Items table created successfully.");
-  }
+Object.entries(TABLES).forEach(([definition, migration]) => {
+  db.run(migration, (err) => {
+    if (err) {
+      console.error(`Error while running: ${definition}`, err.message);
+    } else {
+      console.log(`${definition} ran successfully.`);
+    }
+  });
 });
 
 db.close();

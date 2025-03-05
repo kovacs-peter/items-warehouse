@@ -12,5 +12,5 @@ import { RouterLinkWithHref } from "@angular/router";
 })
 export class ListItemComponent {
   @Input() item: WarehouseItem;
-  @Output() addToShipment: EventEmitter<void> = new EventEmitter<void>();
+  @Output() addToShipment: EventEmitter<string> = new EventEmitter<string>();
 }

@@ -1,20 +1,16 @@
 :host {
   .list-item {
     margin-bottom: 1.5rem;
-    -webkit-border-radius: 20px;
-    border-radius: 20px;
+    border-radius: 1rem;
     background: #fefefe;
-    -webkit-box-shadow:
-      12px 12px 24px #d8d8d8,
-      -12px -12px 24px #fff;
-    box-shadow:
-      12px 12px 24px #d8d8d8,
-      -12px -12px 24px #fff;
+    box-shadow: 12px 12px 24px #d8d8d8;
+    border: 1px solid #dfdfdf;
+
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 10px 10px;
     &--image img {
       border-radius: 5px;
       width: 50px;

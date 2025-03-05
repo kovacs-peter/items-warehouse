@@ -9,7 +9,7 @@ import { RouterLinkWithHref } from "@angular/router";
   templateUrl: "./navigation.component.html",
   styleUrls: ["./navigation.component.scss"],
 })
-export class ItemFormComponent {
+export class NavigationComponent {
   navigationItems = [
     {
       name: "Home",
@@ -18,6 +18,10 @@ export class ItemFormComponent {
     {
       name: "Add warehouse item",
       url: "/create",
+    },
+    {
+      name: "Ongoing shipments",
+      url: "/shipments",
     },
   ];
 }
