@@ -1,13 +1,13 @@
 import { Injectable } from "@angular/core";
 import { ComponentStore } from "@ngrx/component-store";
-
-import { filter, map, switchMap } from "rxjs";
-import { ShipmentItem, ShipmentPayload } from "../core/models/shipment";
+import { filter, map, switchMap, tap } from "rxjs";
+import { Shipment, ShipmentItem, ShipmentPayload } from "../core/models/shipment";
 import { ItemsStore } from "./items.store";
 import { ShipmentsService } from "../services/shipments.service";
 
 interface ShipmentsState {
   shipmentCartItems: Record<ShipmentItem["id"], ShipmentItem>;
+  shipments: Shipment[];
 }
 
 @Injectable()
@@ -16,10 +16,11 @@ export class ShipmentsStore extends ComponentStore<ShipmentsState> {
     private itemsStore: ItemsStore,
     private shipmentsService: ShipmentsService
   ) {
-    super({ shipmentCartItems: {} });
+    super({ shipmentCartItems: {}, shipments: [] });
   }
 
   readonly shipmentCartItems$ = this.select((state) => Object.values(state.shipmentCartItems));
+  readonly shipments$ = this.select((state) => state.shipments);
 
   readonly addToCart = this.effect<string>((id$) => {
     return id$.pipe(
@@ -42,7 +43,7 @@ export class ShipmentsStore extends ComponentStore<ShipmentsState> {
   });
 
   readonly clearCart = () => {
-    this.patchState({ shipmentCartItems: {} });
+    this.patchState((state) => ({ ...state, shipmentCartItems: {} }));
   };
 
   readonly createShipment = this.effect((trigger$) =>
@@ -53,11 +54,18 @@ export class ShipmentsStore extends ComponentStore<ShipmentsState> {
         );
         return this.shipmentsService.createShipment(shipmentItems).pipe(
           map(() => {
-            this.clearCart();
             this.itemsStore.loadItems();
           })
         );
-      })
+      }),
+      tap(() => this.clearCart())
+    )
+  );
+
+  readonly loadShipments = this.effect((trigger$) =>
+    trigger$.pipe(
+      switchMap(() => this.shipmentsService.getShipments()),
+      tap((shipments) => this.patchState({ shipments }))
     )
   );
 }

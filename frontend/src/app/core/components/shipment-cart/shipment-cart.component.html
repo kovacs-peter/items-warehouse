@@ -1,4 +1,4 @@
-<div class="shipment-cart">
+<div *ngIf="(shipmentItems$ | async)?.length" class="shipment-cart">
   <header>
     <h2>Pending Shipments</h2>
   </header>
@@ -8,7 +8,9 @@
         {{ item.name }} - Quantity: {{ item.quantity }}
       </li>
     </ul>
-    <button (click)="onShipmentClear()">Clear Cart</button>
-    <button (click)="onShipmentCreate()">Ship Items</button>
+    <div class="button-container">
+      <button class="delete" (click)="onShipmentClear()">Clear Cart</button>
+      <button class="ship" (click)="onShipmentCreate()">Ship Items</button>
+    </div>
   </section>
 </div>

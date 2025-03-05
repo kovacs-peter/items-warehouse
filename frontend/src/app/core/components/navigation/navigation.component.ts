@@ -19,5 +19,9 @@ export class NavigationComponent {
       name: "Add warehouse item",
       url: "/create",
     },
+    {
+      name: "Ongoing shipments",
+      url: "/shipments",
+    },
   ];
 }

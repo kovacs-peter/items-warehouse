@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { ShipmentPayload } from "../core/models/shipment";
+import { Shipment, ShipmentPayload } from "../core/models/shipment";
 
 @Injectable({
   providedIn: "root",
@@ -13,5 +13,9 @@ export class ShipmentsService {
 
   createShipment(shipmentItems: ShipmentPayload): Observable<any> {
     return this.http.post(`${this.baseUrl}/shipments`, shipmentItems);
+  }
+
+  getShipments(): Observable<Shipment[]> {
+    return this.http.get<Shipment[]>(`${this.baseUrl}/shipments`);
   }
 }

@@ -1,0 +1,12 @@
+<div *ngIf="shipments$ | async as shipments">
+  <div *ngFor="let shipment of shipments">
+    <h3>Shipment ID: {{ shipment.id }}</h3>
+    <p>Created At: {{ shipment.created_at }}</p>
+    <div *ngFor="let item$ of shipment.items">
+      <div *ngIf="item$ | async as item">
+        <p>Item Name: {{ item.name }}</p>
+        <p>Quantity: {{ item.quantity }}</p>
+      </div>
+    </div>
+  </div>
+</div>
